@@ -1,19 +1,25 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 export interface UserType {
-  uid: string | null;
-  email: string | null;
-  password: string | null;
+  uid: string;
+  email: string;
+  username: string;
 }
 
-interface UserState {
-  user: UserType | null;
-}
-
-const initialState: UserState = {
-  user: null,
+const initialState = {
+  user: {
+    uid: "",
+    username: "",
+    email: "",
+    // isFetching: false,
+    // isSuccess: false,
+    // isError: false,
+    // errorMessage: "",
+  },
 };
+
+// export const LoginAsync = createAsyncThunk<UserState>("user/login", async(_));
 
 // export const incrementAsync = createAsyncThunk(
 //   'counter/fetchCount',
@@ -32,7 +38,15 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     logout: (state) => {
-      state.user = null;
+      state.user = {
+        uid: "",
+        username: "",
+        email: "",
+        // isFetching: false,
+        // isSuccess: false,
+        // isError: false,
+        // errorMessage: "",
+      };
     },
   },
 

@@ -8,6 +8,7 @@ import Home from "./templates/Home";
 import Login from "./templates/Login";
 import NewPost from "./templates/NewPost";
 import Search from "./templates/Search";
+// import Footer from "./components/Footer";
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <Route exact path="/search" component={Search}></Route>
         <Route exact path="/complete" component={Complete}></Route>
       </Switch>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };
