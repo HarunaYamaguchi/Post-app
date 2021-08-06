@@ -1,9 +1,12 @@
 import React from "react";
+import { Typography } from "@material-ui/core";
 
 const Complete = () => {
   return (
     <div>
-      <h1>記事作成完了</h1>
+      <Typography variant="h3" gutterBottom>
+        記事の投稿ありがとうございました！
+      </Typography>
     </div>
   );
 };

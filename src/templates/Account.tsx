@@ -3,7 +3,7 @@ import React from "react";
 const Account = () => {
   return (
     <div>
-      <h1>アカウント画面</h1>
+      <h3>アカウント画面</h3>
     </div>
   );
 };

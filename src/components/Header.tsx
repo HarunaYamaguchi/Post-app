@@ -10,7 +10,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SearchIcon from "@material-ui/icons/Search";
-import { auth, provider } from "../firebase/firebase";
+import { auth } from "../firebase/firebase";
 import { selectUser, logout } from "../features/userSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,14 +31,7 @@ const Header: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  // const handleLink = (path: any) => history.push(path);
   const user = useSelector(selectUser);
-
-  const signInGoogle = async () => {
-    await auth
-      .signInWithRedirect(provider)
-      .catch((error) => alert(error.message));
-  };
 
   useEffect(() => {
     const unSub = auth.onAuthStateChanged((authUser) => {
@@ -46,7 +39,6 @@ const Header: React.FC = () => {
         dispatch({
           uid: authUser.uid,
           username: authUser.displayName,
-          email: authUser.email,
         });
       } else {
         dispatch(logout());
@@ -66,10 +58,10 @@ const Header: React.FC = () => {
             className={classes.title}
             onClick={() => history.push("/")}
           >
-            BLOG
+            Post Search App
           </Typography>
-          <IconButton color="inherit" aria-label="account">
-            <Link to={"/account"}>
+          <IconButton color="inherit" aria-label="mypage">
+            <Link to={"/mypage"}>
               <AccountCircleIcon />
             </Link>
           </IconButton>

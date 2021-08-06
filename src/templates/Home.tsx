@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { auth } from "../firebase/firebase";
+// import { auth } from "../firebase/firebase";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

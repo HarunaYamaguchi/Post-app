@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+// import { useDispatch } from "react-redux";
+// import { useHistory } from "react-router";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
+// import Link from "@material-ui/core/Link";
+// import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { auth } from "../firebase/firebase";
+// import { auth, provider } from "../firebase/firebase";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -27,49 +30,77 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface InputLogin {
+  email: string;
+  password: string;
+}
+
 const Login = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const inputEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setEmail(e.target.value);
-  };
-
-  const signInEmail = async () => {
-    await auth.signInWithEmailAndPassword(email, password);
-  };
-
   const classes = useStyles();
+  // const dispatch = useDispatch();
+  // const history = useHistory();
+  // const handlePage = (path) => history.push(path);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InputLogin>();
+
+  const onSubmit: SubmitHandler<InputLogin> = (data) => {
+    console.log(data);
+  };
+
+  // const signInGoogle = async () => {
+  //   await auth
+  //     .signInWithRedirect(provider)
+  //     .catch((error) => alert(error.message));
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          Sign in
+          ログイン
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className={classes.form}
+          noValidate
+        >
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
+            label="メールアドレス"
+            type="text"
             id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+            {...register("email", {
+              required: "メールアドレスが入力されていません",
+              pattern: {
+                value:
+                  /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
+                message: "メールアドレスを正しく入力してください",
+              },
+            })}
+            helperText={errors.email && errors.email.message}
           />
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
-            name="password"
-            label="Password"
+            label="パスワード"
             type="password"
             id="password"
-            autoComplete="current-password"
+            {...register("password", {
+              required: "パスワードが入力されていません",
+              minLength: {
+                value: 6,
+                message: "6文字以上で入力してください",
+              },
+            })}
+            helperText={errors.password && errors.password.message}
           />
           <Button
             type="submit"
@@ -77,16 +108,17 @@ const Login = () => {
             variant="contained"
             color="primary"
             className={classes.submit}
+            // onClick={() => history.push("/")}
           >
-            Sign In
+            ログイン
           </Button>
-          <Grid container>
+          {/* <Grid container>
             <Grid item>
               <Link href="#" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </div>
       <Box mt={8}></Box>
